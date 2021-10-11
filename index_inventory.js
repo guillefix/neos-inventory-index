@@ -40,8 +40,8 @@ async function MaybeGetFolderContentsRecursive(ownerId,dirPath) {
 async function GetFolderContentsRecursive(ownerId, dirPath) {
   await sleep(300);
   console.log(ownerId+"/"+dirPath)
-  if (global_index % 200 == 0)
-    await SaveDataGlobal(allRecords,"data/backup_"+global_index.toString());
+  // if (global_index % 200 == 0)
+  //   await SaveDataGlobal(allRecords,"data/backup_"+global_index.toString());
   res = await neos.CloudXInterface.GetRecordsFull(ownerId,tag=null,path=dirPath)
 
   console.log("Status: ",res.State)
@@ -49,14 +49,14 @@ async function GetFolderContentsRecursive(ownerId, dirPath) {
     for(const record of res.Content) {
       // console.log(record.name)
       if (record.recordType == "directory") {
-        allRecords.push(record);
+        // allRecords.push(record);
         let dirPathNew = dirPath+"\\"+record.name;
         // let recordId = path+"\\"+record.name;
         await MaybeGetFolderContentsRecursive(record.ownerId,dirPathNew);
       } else if (record.recordType == "object") {
-        // console.log("Object");
-        allRecords.push(record)
+        // allRecords.push(record)
       } else if (record.recordType == "link") {
+        allRecords.push(record);
         // console.log("Found recordType of type link");
         values = await LinkToUserAndPath(record.assetUri);
         let ownerIdNew = values[0];
@@ -89,7 +89,8 @@ async function IndexInventory () {
     console.log("Indexing");
     console.log(ownerId, dirPath);
     await MaybeGetFolderContentsRecursive(ownerId,dirPath);
-    await SaveData(allRecords,"data/intermediate_"+file_list_index.toString());
+    // await SaveData(allRecords,"data/intermediate_"+file_list_index.toString());
+    await SaveData(allRecords,"data/links_intermediate_"+file_list_index.toString());
     file_list_index += 1;
   }
 }
