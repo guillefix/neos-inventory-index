@@ -6,3 +6,5 @@
 4. Run `node index_inventory.js`
 
 It will recursively index all the records inside the public folders whose links are in the `inventory_links.txt` file, which I got from The Directory and some other public folders I have
+
+To convert thumbnails to jpg, use `find thumbnails/ -print0 -name "*.webp" | parallel -0 -I{} convert {} {}.jpg`
