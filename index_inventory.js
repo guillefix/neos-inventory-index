@@ -1,4 +1,5 @@
 const Neos = require('./Neos.js/Neos.js')
+//import Neos from './Neos.js/Neos.js';
 const neos = new Neos()
 
 function sleep(ms) {
@@ -54,10 +55,10 @@ async function GetFolderContentsRecursive(ownerId, dirPath) {
         // let recordId = path+"\\"+record.name;
         await MaybeGetFolderContentsRecursive(record.ownerId,dirPathNew);
       } else if (record.recordType == "object") {
-        // allRecords.push(record)
+        allRecords.push(record)
       } else if (record.recordType == "link") {
         allRecords.push(record);
-        // console.log("Found recordType of type link");
+        console.log("Found recordType of type link");
         values = await LinkToUserAndPath(record.assetUri);
         let ownerIdNew = values[0];
         let dirPathNew = values[1];

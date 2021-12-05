@@ -22,7 +22,7 @@ async function downloadImage(url, name) {
 }
 
 async function main() {
-  let rawdata = await fs.readFile('data/intermediate_159');
+  let rawdata = await fs.readFile('data/links_intermediate_160');
   let data = JSON.parse(rawdata);
   // console.log(data[0])
   for(let d of data) {
